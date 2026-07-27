@@ -1,0 +1,177 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000012C00000000000001 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000012C00000000000001 /* MainApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AITerminalPro.app = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AITerminalPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000012C00000000000001 /* MainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/App/MainApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F10000012C00000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G10000012C00000000000001 = {
+			isa = PBXGroup;
+			children = (
+				B10000012C00000000000001 /* MainApp.swift */,
+				P10000012C00000000000001 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		P10000012C00000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AITerminalPro.app,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		T10000012C00000000000001 /* AppContainer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C10000012C00000000000001 /* Build configuration list for PBXNativeTarget "AppContainer" */;
+			buildPhases = (
+				S10000012C00000000000001 /* Sources */,
+				F10000012C00000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppContainer;
+			productName = AppContainer;
+			productReference = AITerminalPro.app;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ROOTPROJECT01 = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1540;
+			};
+			buildConfigurationList = C10000022C00000000000001 /* Build configuration list for PBXProject "AppContainer" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = G10000012C00000000000001;
+			productRefGroup = P10000012C00000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				T10000012C00000000000001 /* AppContainer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		S10000012C00000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000012C00000000000001 /* MainApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BC1000012C00000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AITerminalPro;
+				PRODUCT_NAME = AITerminalPro;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BC1000022C00000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AITerminalPro;
+				PRODUCT_NAME = AITerminalPro;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BC1000032C00000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BC1000042C00000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C10000012C00000000000001 /* Build configuration list for PBXNativeTarget "AppContainer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC1000012C00000000000001 /* Debug */,
+				BC1000022C00000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C10000022C00000000000001 /* Build configuration list for PBXProject "AppContainer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC1000032C00000000000001 /* Debug */,
+				BC1000042C00000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ROOTPROJECT01;
+}
