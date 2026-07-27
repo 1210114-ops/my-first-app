@@ -17,25 +17,36 @@ jobs:
         with:
           xcode-version: '15.4'
 
-      - name: Build with SwiftPM using iOS SDK
+      - name: Generate Xcode Project
         run: |
-          # 取得 iOS SDK 路徑並使用 SwiftPM 進行跨平台 Release 編譯
-          SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)
-          swift build -c release -Xswiftc -sdk -Xswiftc "$SDKPATH" -Xswiftc -target -Xswiftc arm64-apple-ios17.0
+          swift package generate-xcodeproj
+
+      - name: Build iOS App with xcodebuild
+        run: |
+          xcodebuild build \
+            -project AITerminalPro.xcodeproj \
+            -scheme AITerminalPro-Package \
+            -sdk iphoneos \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Package into .ipa
         run: |
           mkdir -p Payload/AITerminalPro.app
           
-          # 尋找產出的 binary 執行檔
-          EXECUTABLE=$(find .build -name "AITerminalPro" -type f | head -n 1)
-          if [ -n "$EXECUTABLE" ]; then
-            cp "$EXECUTABLE" Payload/AITerminalPro.app/
+          # 尋找 Release-iphoneos 產出的 .app 或執行檔
+          APP_DIR=$(find build/Build/Products/Release-iphoneos -name "*.app" | head -n 1)
+          if [ -n "$APP_DIR" ]; then
+            cp -R "$APP_DIR"/* Payload/AITerminalPro.app/
+          else
+            EXECUTABLE=$(find build/Build/Products/Release-iphoneos -type f -name "AITerminalPro" | head -n 1)
+            [ -n "$EXECUTABLE" ] && cp "$EXECUTABLE" Payload/AITerminalPro.app/
           fi
           
-          if [ -f "Info.plist" ]; then
-            cp Info.plist Payload/AITerminalPro.app/
-          fi
+          [ -f "Info.plist" ] && cp Info.plist Payload/AITerminalPro.app/
 
           zip -r AI-Terminal-Pro.ipa Payload
 
