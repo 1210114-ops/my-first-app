@@ -19,40 +19,29 @@ jobs:
 
       - name: Build Swift Package for iOS
         run: |
-          # 1. 使用 xcodebuild 針對 iOS 裝置編譯 SPM 專案
+          # 自動尋找 SPM 產生的 Target 並編譯
           xcodebuild build \
             -scheme "AITerminalPro" \
             -destination 'generic/platform=iOS' \
             -configuration Release \
-            -derivedDataPath build \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO || \
-          xcodebuild build \
-            -destination 'generic/platform=iOS' \
-            -configuration Release \
-            -derivedDataPath build \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
       - name: Create iOS App Bundle & Package .ipa
         run: |
-          # 2. 手動建立 iOS .app Payload 結構並封裝 .ipa
           mkdir -p Payload/AITerminalPro.app
           
-          # 複製編譯出的執行檔與資源檔
-          EXECUTABLE=$(find build/Build/Products -type f -name "AITerminalPro" | head -n 1)
+          # 抓取編譯產物
+          EXECUTABLE=$(find ~/Library/Developer/Xcode/DerivedData -name "AITerminalPro" -type f | head -n 1)
           if [ -n "$EXECUTABLE" ]; then
             cp "$EXECUTABLE" Payload/AITerminalPro.app/
           fi
           
-          # 複製 Info.plist
           if [ -f "Info.plist" ]; then
             cp Info.plist Payload/AITerminalPro.app/
           fi
 
-          # 打包成 .ipa
           zip -r AI-Terminal-Pro.ipa Payload
 
       - name: Upload IPA Artifact
