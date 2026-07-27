@@ -9,8 +9,8 @@ workflows:
       - name: Build iOS App (.app)
         script: |
           xcodebuild build \
-            -project AITerminalPro.xcodeproj \
-            -scheme AITerminalPro \
+            -project AppContainer.xcodeproj \
+            -scheme AppContainer \
             -sdk iphoneos \
             -configuration Release \
             -derivedDataPath build \
