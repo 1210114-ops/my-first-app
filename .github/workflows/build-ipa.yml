@@ -17,16 +17,17 @@ jobs:
         with:
           xcode-version: '15.4'
 
-      - name: Build with SwiftPM for iOS
+      - name: Build with SwiftPM using iOS SDK
         run: |
-          # 使用 swiftbuild 直接跨平台編譯 iOS Release 執行檔
-          swift build -c release --triple arm64-apple-ios17.0
+          # 取得 iOS SDK 路徑並使用 SwiftPM 進行跨平台 Release 編譯
+          SDKPATH=$(xcrun --sdk iphoneos --show-sdk-path)
+          swift build -c release -Xswiftc -sdk -Xswiftc "$SDKPATH" -Xswiftc -target -Xswiftc arm64-apple-ios17.0
 
       - name: Package into .ipa
         run: |
           mkdir -p Payload/AITerminalPro.app
           
-          # 尋找產出的 binary 檔
+          # 尋找產出的 binary 執行檔
           EXECUTABLE=$(find .build -name "AITerminalPro" -type f | head -n 1)
           if [ -n "$EXECUTABLE" ]; then
             cp "$EXECUTABLE" Payload/AITerminalPro.app/
