@@ -1,0 +1,33 @@
+workflows:
+  ios-spm-build:
+    name: iOS Package IPA Build
+    instance_type: mac_mini_m1
+    max_build_duration: 30
+    environment:
+      xcode: 15.4
+      cocoapods: default
+    scripts:
+      - name: Build iOS App with xcodebuild
+        script: |
+          swift package generate-xcodeproj || true
+          xcodebuild build \
+            -scheme "AITerminalPro-Package" \
+            -sdk iphoneos \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Package IPA
+        script: |
+          mkdir -p Payload/AITerminalPro.app
+          EXECUTABLE=$(find build/Build/Products/Release-iphoneos -type f -name "AITerminalPro" | head -n 1)
+          if [ -n "$EXECUTABLE" ]; then
+            cp "$EXECUTABLE" Payload/AITerminalPro.app/
+          fi
+          if [ -f "Info.plist" ]; then
+            cp Info.plist Payload/AITerminalPro.app/
+          fi
+          zip -r AI-Terminal-Pro.ipa Payload
+    artifacts:
+      - "*.ipa"
