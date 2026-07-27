@@ -17,23 +17,17 @@ jobs:
         with:
           xcode-version: '15.4'
 
-      - name: Build Swift Package for iOS
+      - name: Build with SwiftPM for iOS
         run: |
-          # 自動尋找 SPM 產生的 Target 並編譯
-          xcodebuild build \
-            -scheme "AITerminalPro" \
-            -destination 'generic/platform=iOS' \
-            -configuration Release \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+          # 使用 swiftbuild 直接跨平台編譯 iOS Release 執行檔
+          swift build -c release --triple arm64-apple-ios17.0
 
-      - name: Create iOS App Bundle & Package .ipa
+      - name: Package into .ipa
         run: |
           mkdir -p Payload/AITerminalPro.app
           
-          # 抓取編譯產物
-          EXECUTABLE=$(find ~/Library/Developer/Xcode/DerivedData -name "AITerminalPro" -type f | head -n 1)
+          # 尋找產出的 binary 檔
+          EXECUTABLE=$(find .build -name "AITerminalPro" -type f | head -n 1)
           if [ -n "$EXECUTABLE" ]; then
             cp "$EXECUTABLE" Payload/AITerminalPro.app/
           fi
