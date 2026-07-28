@@ -2,8 +2,11 @@ name: Build iOS IPA
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -12,20 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '15.4'
-
-      - name: Generate Xcode Project
-        run: |
-          swift package generate-xcodeproj
-
-      - name: Build iOS App with xcodebuild
+      - name: Build iOS app
         run: |
           xcodebuild build \
             -project AITerminalPro.xcodeproj \
-            -scheme AITerminalPro-Package \
+            -scheme AITerminalPro \
             -sdk iphoneos \
             -configuration Release \
             -derivedDataPath build \
@@ -33,25 +27,17 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Package into .ipa
+      - name: Package unsigned IPA
         run: |
-          mkdir -p Payload/AITerminalPro.app
-          
-          # 尋找 Release-iphoneos 產出的 .app 或執行檔
-          APP_DIR=$(find build/Build/Products/Release-iphoneos -name "*.app" | head -n 1)
-          if [ -n "$APP_DIR" ]; then
-            cp -R "$APP_DIR"/* Payload/AITerminalPro.app/
-          else
-            EXECUTABLE=$(find build/Build/Products/Release-iphoneos -type f -name "AITerminalPro" | head -n 1)
-            [ -n "$EXECUTABLE" ] && cp "$EXECUTABLE" Payload/AITerminalPro.app/
-          fi
-          
-          [ -f "Info.plist" ] && cp Info.plist Payload/AITerminalPro.app/
+          APP_PATH=$(find build/Build/Products/Release-iphoneos -name '*.app' -type d -print -quit)
+          test -n "$APP_PATH"
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/AITerminalPro.app
+          /usr/bin/zip -qry AI-Terminal-Pro-unsigned.ipa Payload
 
-          zip -r AI-Terminal-Pro.ipa Payload
-
-      - name: Upload IPA Artifact
+      - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AI-Terminal-Pro-IPA
-          path: AI-Terminal-Pro.ipa
+          name: AI-Terminal-Pro-unsigned-IPA
+          path: AI-Terminal-Pro-unsigned.ipa
+          if-no-files-found: error
